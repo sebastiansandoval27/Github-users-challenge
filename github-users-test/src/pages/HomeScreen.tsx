@@ -7,6 +7,7 @@ import useUsers from '../hooks/useUsers'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
 import Chart from '../components/Chart'
+import { ToastContainer } from 'react-toastify'
 
 const HomeScreen: React.FC = () => {
 
@@ -27,6 +28,7 @@ const HomeScreen: React.FC = () => {
     <Layout>
       <div className="content flex justify-start items-start gap-3"
         style={{ height: `calc(100vh - 12.5rem)` }}
+        id="Users"
       >
         <div className="image flex justify-center items-center w-1/2 h-full overflow-hidden relative">
           <img src={backImage} alt="background image" className='w-full h-full object-cover' />
@@ -76,6 +78,7 @@ const HomeScreen: React.FC = () => {
           }
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   )
 }

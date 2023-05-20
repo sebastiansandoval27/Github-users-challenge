@@ -1,0 +1,58 @@
+.userGrid {
+  display: grid;
+  grid-template-areas:
+    "avatar login"
+    "avatar name"
+    "avatar email"
+    "avatar followers"
+    "avatar location"
+    "avatar bio"
+  ;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.grid-avatar {
+  grid-area: avatar;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-login {
+  grid-area: login;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-name {
+  grid-area: name;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-email {
+  grid-area: email;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-followers {
+  grid-area: followers;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-location {
+  grid-area: location;
+  justify-self: center;
+  align-self: center;
+}
+
+.grid-bio {
+  grid-area: bio;
+  justify-self: center;
+  align-self: center;
+}

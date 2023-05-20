@@ -2,12 +2,17 @@ import { useState } from 'react'
 import githubAPI from '../services/GithubAPI'
 import { AxiosError } from 'axios';
 import { User, UserFull, UserResponse } from '../interfaces/User';
+import useToast from './useToast';
 
 const useUsers = () => {
 
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [userFollowers, setUserFollowers] = useState<UserFull[]>([])
+
+  const {
+    notifyError
+  } = useToast();
 
   const [startSearch, setStartSearch] = useState<boolean>(false)
 
@@ -21,6 +26,7 @@ const useUsers = () => {
         getFollowersByUser(response.data.items.map((user) => user.login));
       }
     } catch (error: AxiosError | Error | any) {
+      notifyError('Error getting users', 'Users');
       throw new Error(error);
     } finally {
       setLoading(false);
@@ -35,6 +41,7 @@ const useUsers = () => {
       const followers = response.map((user) => user.data);
       setUserFollowers(followers);
     } catch (error: AxiosError | Error | any) {
+      notifyError('Error getting followers', 'Users');
       throw new Error(error);
     } finally {
       setLoading(false);

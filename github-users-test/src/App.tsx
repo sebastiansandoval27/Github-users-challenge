@@ -1,11 +1,12 @@
 import React from 'react'
 import './App.css'
+import MainRouter from './routers/MainRouter'
 
 
 const App: React.FC = () => {
   return (
-    <div className="App ">
-      App
+    <div className="App">
+      <MainRouter />
     </div>
   )
 }

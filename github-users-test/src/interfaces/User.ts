@@ -1,3 +1,9 @@
+export interface LocalResponseUser {
+  message: string;
+	error: boolean;
+	data: UserFull[];
+  status: number;
+}
 export interface UserFull {
   login: string;
   id: number;

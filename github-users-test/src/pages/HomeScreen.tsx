@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
 import Chart from '../components/Chart'
 import { ToastContainer } from 'react-toastify'
+import ModalUsersSaved from '../components/ModalUsersSaved'
 
 const HomeScreen: React.FC = () => {
 
@@ -16,7 +17,11 @@ const HomeScreen: React.FC = () => {
     users,
     loading,
     userFollowers,
-    startSearch
+    startSearch,
+    showModal,
+    setShowModal,
+    getUsersSavedLocally,
+    usersLocal
   } = useUsers();
   const navigate = useNavigate();
 
@@ -26,6 +31,11 @@ const HomeScreen: React.FC = () => {
 
   return (
     <Layout>
+      {
+        showModal && (
+          <ModalUsersSaved users={usersLocal} getUsersSavedLocally={getUsersSavedLocally} loading={loading} onClose={() => setShowModal(false)} />
+        )
+      }
       <div className="content flex justify-start items-start gap-3"
         style={{ height: `calc(100vh - 12.5rem)` }}
         id="Users"
@@ -35,6 +45,13 @@ const HomeScreen: React.FC = () => {
           <div className="form absolute top-0 left-0 bg-black bg-opacity-40 w-full h-full flex flex-col justify-start items-center pt-5">
             <div className='content w-4/5'>
               <SearchInput searchUser={getAllUsersByName} />
+            </div>
+            <div className='content w-4/5'>
+            <button className="w-full h-12 px-4 py-3 my-2 bg-white text-cyan-700 rounded-md font-black text-xl" type="button" onClick={() => {
+              setShowModal(true)
+            }}>
+              Users saved locally
+            </button>
             </div>
           </div>
         </div>

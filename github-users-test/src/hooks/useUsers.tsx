@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import githubAPI from '../services/GithubAPI'
 import { AxiosError } from 'axios';
-import { User, UserFull, UserResponse } from '../interfaces/User';
+import { LocalResponseUser, User, UserFull, UserResponse } from '../interfaces/User';
 import useToast from './useToast';
 
 const useUsers = () => {
 
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [userFollowers, setUserFollowers] = useState<UserFull[]>([])
+  const [usersLocal, setUsersLocal] = useState<UserFull[]>([])
 
   const {
     notifyError
@@ -48,12 +50,29 @@ const useUsers = () => {
     }
   };
 
+  const getUsersSavedLocally = async (): Promise<void> => {
+    try {
+      setLoading(true);
+      const response = await githubAPI('local').get<LocalResponseUser>(`/users`);
+      setUsersLocal(response.data.data);
+    } catch (error: AxiosError | Error | any) {
+      notifyError('Error getting users saved locally', 'Users');
+      throw new Error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     getAllUsersByName,
     users,
     loading,
     userFollowers,
-    startSearch
+    startSearch,
+    showModal,
+    setShowModal,
+    getUsersSavedLocally,
+    usersLocal
   }
 
 }

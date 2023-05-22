@@ -21,15 +21,15 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     x: {
       ticks: {
         autoSkip: false,
         maxRotation: 90,
-        minRotation: 90,
+        minRotation: 75,
         font: {
           size: 15,
-
         }
       }
     },
@@ -47,6 +47,9 @@ export const options = {
     title: {
       display: true,
       text: 'Followers by Github User',
+      font:{
+        size: 18,
+      }
     },
   },
 };
@@ -59,14 +62,16 @@ const Chart: React.FC<Props> = ({
   data,
 }) => {
   return (
-    <div>
+    <div className='w-full mt-2' style={{
+      minHeight: '350px',
+    }}>
       <Bar options={options} data={{
         labels: data.map((user) => user.login),
         datasets: [
           {
             label: 'Followers',
             data: data.map((user) => user.followers),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(14,116,144,0.8)',
           },
         ],
 

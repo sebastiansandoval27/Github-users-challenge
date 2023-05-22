@@ -11,7 +11,7 @@ const connection =  new DataSource({
     database: process.env.DB_NAME,
     entities: [User],
     synchronize: true, // Set to false in production
-    logging: true, // Set to false in production
+    logging:false,
   });
 
 export default connection;

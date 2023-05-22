@@ -18,19 +18,19 @@ export interface UserFull {
   type: string;
   site_admin: boolean;
   name: string;
-  company: null;
+  company?: null;
   blog: string;
   location: string;
-  email: null;
-  hireable: null;
+  email?: null;
+  hireable?: null;
   bio: string;
-  twitter_username: null;
+  twitter_username?: null;
   public_repos: number;
   public_gists: number;
   followers: number;
   following: number;
   created_at: string;
-  updated_at: string;
+  updated_at?: string;
 }
 
 export interface UserResponse {

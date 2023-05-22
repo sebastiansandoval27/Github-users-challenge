@@ -11,7 +11,8 @@ const useUser = () => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const {
-    notifyError
+    notifyError,
+    notifySuccess
   } = useToast();
 
   let { login } = useParams();
@@ -19,10 +20,26 @@ const useUser = () => {
   const getUserDetails = async (login: string): Promise<void> => {
     try {
       setLoading(true);
-      const response = await githubAPI.get<UserFull>(`/users/${login}`);
+      const response = await githubAPI('github').get<UserFull>(`/users/${login}`);
       setUser(response.data)
     } catch (error: AxiosError | Error | any) {
       notifyError('Error getting user details', 'User');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const saveUser = async (user: UserFull): Promise<void> => {
+    try {
+      setLoading(true);
+      await githubAPI('local').post<UserFull>(`/users`, {
+        user
+      });
+
+      notifySuccess('User saved successfully', `User with the id ${user.id}`);
+    } catch (error: AxiosError | Error | any) {
+      notifyError('Error saving user', 'User');
     } finally {
       setLoading(false);
     }
@@ -37,7 +54,8 @@ const useUser = () => {
 
   return {
     user,
-    loading
+    loading,
+    saveUser
   }
 
 }

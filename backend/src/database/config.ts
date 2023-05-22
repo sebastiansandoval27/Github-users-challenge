@@ -1,15 +1,17 @@
 require('dotenv').config();
-import { Sequelize } from "sequelize-typescript";
-import User from "./models/UserModel";
+import { DataSource } from "typeorm";
+import {User} from "./models/UserModel";
 
-const connection = new Sequelize({
-    dialect: "mysql",
+const connection =  new DataSource({
+    type: 'mysql',
+    host: process.env.DB_HOST,
+    port: 3306,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    username: process.env.DB_USERNAME,
-    logging: false,
-    models: [typeof User],
-});
+    entities: [User],
+    synchronize: true, // Set to false in production
+    logging: true, // Set to false in production
+  });
 
 export default connection;

@@ -20,7 +20,7 @@ const useUsers = () => {
     try {
       setLoading(true);
       setStartSearch(true);
-      const response = await githubAPI.get<UserResponse>(`/search/users?per_page=10&q=${login}`);
+      const response = await githubAPI('github').get<UserResponse>(`/search/users?per_page=10&q=${login}`);
       if (response.data.items.length > 0) {
         setUsers(response.data.items);
         getFollowersByUser(response.data.items.map((user) => user.login));
@@ -36,7 +36,7 @@ const useUsers = () => {
   const getFollowersByUser = async (login: string[]): Promise<void> => {
     try {
       setLoading(true);
-      const promises = login.map((login) => githubAPI.get<UserFull>(`/users/${login}`));
+      const promises = login.map((login) => githubAPI('github').get<UserFull>(`/users/${login}`));
       const response = await Promise.all(promises);
       const followers = response.map((user) => user.data);
       setUserFollowers(followers);

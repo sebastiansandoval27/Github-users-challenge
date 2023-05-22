@@ -27,5 +27,10 @@ services:
       - 8081:80
     environment:
       - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - mysql
 volumes:
   test-vm:

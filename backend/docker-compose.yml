@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: "mysql:8.0.29"
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    command:
+      [
+        '--max_connections=170',
+        '--interactive_timeout=180',
+        '--wait_timeout=180',
+        '--default-authentication-plugin=mysql_native_password',
+        '--init-file=/docker-entrypoint-initdb.d/init.sql'
+      ]
+    volumes:
+      - test-vm:/var/lib/mysql
+      - ./src/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
+volumes:
+  test-vm:
